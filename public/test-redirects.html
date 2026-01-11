@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Redirection Test</title>
+</head>
+
+<body>
+    <h1>Redirection Test Page</h1>
+
+    <button id="winOpen">window.open Test</button>
+    <br><br>
+
+    <a href="https://www.google.com" target="_blank" id="blankLink">target="_blank" Link Test</a>
+    <br><br>
+
+    <form action="https://www.bing.com" target="_blank" id="blankForm">
+        <input type="submit" value="target='_blank' Form Test">
+    </form>
+
+    <script>
+        document.getElementById('winOpen').onclick = () => {
+            window.open('https://www.wikipedia.org');
+        };
+    </script>
+</body>
+
+</html>
