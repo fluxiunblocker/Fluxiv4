@@ -260,9 +260,9 @@
             <button type="submit">Go</button>
         </form>
         <div class="quick-links">
-            <button class="quick-link" data-url="https://google.com">Google</button>
+            <button class="quick-link" data-url="https://Duckduckgo.com">Duckduckgo</button>
             <button class="quick-link" data-url="https://youtube.com">YouTube</button>
-            <button class="quick-link" data-url="https://discord.com">Discrd</button>
+            <button class="quick-link" data-url="https://discord.com">Discord</button>
         </div>
         <span id="status" class="status">Loading...</span>
     </div>
@@ -393,7 +393,7 @@
             let url = document.getElementById("url").value.trim();
             if (!url) return;
             if (!url.includes(".") && !url.startsWith("http")) {
-                url = "https://www.google.com/search?q=" + encodeURIComponent(url);
+                url = "https://duckduckgo.com/?origin=funnel_home_website&t=h_&q=" + encodeURIComponent(url);
             }
             navigate(url);
         });
@@ -407,7 +407,6 @@
             if (e.data && e.data.type === "uv-navigate") {
                 let url = e.data.url;
                 if (!url) return;
-                // If it's already encoded by UV, try to decode it for the search bar
                 try {
                     if (url.includes(__uv$config.prefix)) {
                         const encodedPart = url.split(__uv$config.prefix)[1];
