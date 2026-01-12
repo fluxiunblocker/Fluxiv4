@@ -12,19 +12,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const bare = createBareServer("/bare/");
 
-
 app.use((req, res, next) => {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
   next();
 });
 
-
 app.use(express.static(join(__dirname, "../public")));
 app.use("/uv/", express.static(uvPath));
 app.use("/epoxy/", express.static(epoxyPath));
 app.use("/baremux/", express.static(baremuxPath));
-
 
 const server = createServer((req, res) => {
   if (bare.shouldRoute(req)) {
@@ -33,7 +30,6 @@ const server = createServer((req, res) => {
     app(req, res);
   }
 });
-
 
 server.on("upgrade", (req, socket, head) => {
   if (bare.shouldRoute(req)) {
@@ -51,6 +47,4 @@ server.on("error", (err) => {
 
 server.listen(8080, () => {
   console.log("Server running on http://localhost:8080");
-  console.log("Bare server: /bare/");
-  console.log("Wisp server: /wisp/");
 });

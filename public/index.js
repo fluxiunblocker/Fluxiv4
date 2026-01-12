@@ -4,42 +4,28 @@ async function init() {
   try {
     const connection = new BareMuxConnection("/baremux/worker.js");
 
-
     let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-
 
     if (location.host !== "localhost:8080" && !location.host.startsWith("127.0.0.1")) {
       wispUrl = "wss://epoxy.mercurywork.shop/";
-
-
     }
-    console.log("Setting up transport with wisp URL:", wispUrl);
     await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
-    console.log("Transport set up successfully");
-
 
     if ("serviceWorker" in navigator) {
-      const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/service/" });
-      console.log("Service worker registered:", registration.scope);
-
-
+      await navigator.serviceWorker.register("/sw.js", { scope: "/service/" });
       await new Promise(resolve => setTimeout(resolve, 500));
     }
 
-    console.log("Initialization complete!");
     return true;
   } catch (error) {
-    console.error("Initialization error:", error);
     alert("Proxy connection failed! Public Wisp servers are down. You MUST host your own server. See walkthrough.md for instructions.");
     return false;
   }
 }
 
-
 const initPromise = init();
 
 async function go(url) {
-
   const ready = await initPromise;
   if (!ready) {
     alert("Failed to initialize proxy. Check console for errors.");

@@ -2,7 +2,6 @@
 importScripts("/uv.config.js");
 importScripts("/uv/uv.sw.js");
 
-
 self.addEventListener("install", () => {
     self.skipWaiting();
 });
