@@ -35,7 +35,10 @@ let jsCode = match[1];
 
 // Let's modify the code to use new URL for imports.
 
-jsCode = jsCode.replace(/from "\/([^"]+)"/g, 'from "' + 'http://localhost:8080' + '/$1"');
+jsCode = jsCode.replace(/from "\/core\//g, 'from "http://localhost:8080/a3b4/');
+jsCode = jsCode.replace(/from "\/lib\//g, 'from "http://localhost:8080/c5d6/');
+jsCode = jsCode.replace(/from "\/assets\//g, 'from "http://localhost:8080/x1y2/');
+jsCode = jsCode.replace(/\/ws\//g, '/e7f8/');
 
 // For localhost, but for production, it won't work.
 

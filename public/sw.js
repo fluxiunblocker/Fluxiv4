@@ -1,6 +1,6 @@
-﻿importScripts("/assets/uv.bundle.js");
+﻿importScripts("/x1y2/uv.bundle.js");
 importScripts("/uv.config.js");
-importScripts("/assets/uv.sw.js");
+importScripts("/x1y2/uv.sw.js");
 
 self.addEventListener("install", () => {
     self.skipWaiting();
