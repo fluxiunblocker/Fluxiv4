@@ -169,7 +169,7 @@
             color: #f44336;
         }
 
-        #proxy-frame {
+        #site-frame {
             flex: 1;
             border: none;
             background: white;
@@ -261,8 +261,7 @@
         </form>
         <div class="quick-links">
             <button class="quick-link" data-url="https://Duckduckgo.com">Duckduckgo</button>
-            <button class="quick-link" data-url="https://youtube.com">YouTube</button>
-            <button class="quick-link" data-url="https://discord.com">Discord</button>
+
         </div>
         <span id="status" class="status">Loading...</span>
     </div>
@@ -274,7 +273,7 @@
         </div>
     </div>
 
-    <iframe id="proxy-frame" style="display: none;"></iframe>
+    <iframe id="site-frame" style="display: none;"></iframe>
 
     <script>
         const canvas = document.getElementById('snow-canvas');
@@ -338,7 +337,7 @@
 
         const statusEl = document.getElementById("status");
         const homeEl = document.getElementById("home");
-        const frameEl = document.getElementById("proxy-frame");
+        const frameEl = document.getElementById("site-frame");
 
         let ready = false;
 
