@@ -4,7 +4,7 @@ import { createServer } from "node:http";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
-import { server as wisp } from "@mercuryworkshop/wisp-js/server";
+import wisp from "wisp-server-node";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -30,7 +30,7 @@ server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head);
   } else if (req.url.endsWith("/ws/")) {
-    wisp(req, socket, head);
+    wisp.routeRequest(req, socket, head);
   } else {
     socket.end();
   }
