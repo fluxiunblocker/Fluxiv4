@@ -19,9 +19,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(join(__dirname, "../public")));
-app.use("/uv/", express.static(uvPath));
-app.use("/epoxy/", express.static(epoxyPath));
-app.use("/baremux/", express.static(baremuxPath));
+app.use("/assets/", express.static(uvPath));
+app.use("/lib/", express.static(epoxyPath));
+app.use("/core/", express.static(baremuxPath));
 
 const server = createServer((req, res) => {
   if (bare.shouldRoute(req)) {
@@ -34,7 +34,7 @@ const server = createServer((req, res) => {
 server.on("upgrade", (req, socket, head) => {
   if (bare.shouldRoute(req)) {
     bare.routeUpgrade(req, socket, head);
-  } else if (req.url.endsWith("/wisp/")) {
+  } else if (req.url.endsWith("/ws/")) {
     wisp.routeRequest(req, socket, head);
   } else {
     socket.end();

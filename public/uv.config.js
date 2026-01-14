@@ -4,7 +4,7 @@
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: "/uv-handler.js",
-    bundle: "/uv/uv.bundle.js",
-    config: "/uv/uv.config.js",
-    sw: "/uv/uv.sw.js",
+    bundle: "/assets/uv.bundle.js",
+    config: "/assets/uv.config.js",
+    sw: "/assets/uv.sw.js",
 };

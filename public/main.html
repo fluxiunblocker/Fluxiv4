@@ -329,87 +329,33 @@
         animate();
     </script>
 
-    <script src="/uv/uv.bundle.js"></script>
-    <script src="/uv/uv.config.js"></script>
+    <script src="/assets/uv.bundle.js"></script>
+    <script src="/assets/uv.config.js"></script>
     <script src="/uv.config.js"></script>
-    <script type="module">
-        import { BareMuxConnection } from "/baremux/index.mjs";
-
-        const statusEl = document.getElementById("status");
-        const homeEl = document.getElementById("home");
-        const frameEl = document.getElementById("site-frame");
-
-        let ready = false;
-
-        async function init() {
-            try {
-                statusEl.textContent = "Initializing...";
-
-                const connection = new BareMuxConnection("/baremux/worker.js");
-
-                const wispUrl = `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/wisp/`;
-                await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
-
-                if ("serviceWorker" in navigator) {
-                    await navigator.serviceWorker.register("/sw.js", { scope: "/service/" });
-                }
-
-                await new Promise(r => setTimeout(r, 300));
-
-                statusEl.textContent = "Ready";
-                statusEl.classList.add("ready");
-                ready = true;
-
-            } catch (error) {
-                statusEl.textContent = "Error";
-                statusEl.classList.add("error");
+    <script src="/encrypted-code.js"></script>
+    <script>
+        // Decryption function
+        function decrypt(encrypted, key) {
+            const decoded = atob(encrypted);
+            let decrypted = '';
+            for (let i = 0; i < decoded.length; i++) {
+                decrypted += String.fromCharCode(decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
             }
+            return decrypted;
         }
 
-        function navigate(url) {
-            if (!ready) {
-                alert("Please wait for initialization to complete");
-                return;
-            }
-            if (!url.startsWith("http")) url = "https://" + url;
-            const encoded = __uv$config.prefix + __uv$config.encodeUrl(url);
+        const key = 'mySecretKey123';
+        const decryptedCode = decrypt(window.encryptedProxyCode, key);
 
-            homeEl.style.display = "none";
-            frameEl.style.display = "block";
-            frameEl.src = encoded;
-        }
+        // Encode as base64 for data URL
+        const encoded = btoa(decryptedCode);
+        const dataUrl = 'data:application/javascript;base64,' + encoded;
 
-        document.getElementById("url-form").addEventListener("submit", e => {
-            e.preventDefault();
-            let url = document.getElementById("url").value.trim();
-            if (!url) return;
-            if (!url.includes(".") && !url.startsWith("http")) {
-                url = "https://duckduckgo.com/?origin=funnel_home_website&t=h_&q=" + encodeURIComponent(url);
-            }
-            navigate(url);
-        });
-
-        document.querySelectorAll(".quick-link").forEach(link => {
-            link.addEventListener("click", () => navigate(link.dataset.url));
-        });
-
-        window.addEventListener("message", (e) => {
-            if (e.data && e.data.type === "uv-navigate") {
-                let url = e.data.url;
-                if (!url) return;
-                try {
-                    if (url.includes(__uv$config.prefix)) {
-                        const encodedPart = url.split(__uv$config.prefix)[1];
-                        url = __uv$config.decodeUrl(encodedPart);
-                    }
-                } catch (err) {
-                }
-                document.getElementById("url").value = url;
-                navigate(url);
-            }
-        });
-
-        init();
+        // Append a script tag to execute the module
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = dataUrl;
+        document.head.appendChild(script);
     </script>
 </body>
 

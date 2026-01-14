@@ -1,15 +1,15 @@
-﻿import { BareMuxConnection } from "/baremux/index.mjs";
+﻿import { BareMuxConnection } from "/core/index.mjs";
 
 async function init() {
   try {
-    const connection = new BareMuxConnection("/baremux/worker.js");
+    const connection = new BareMuxConnection("/core/worker.js");
 
-    let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
+    let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/ws/";
 
     if (location.host !== "localhost:8080" && !location.host.startsWith("127.0.0.1")) {
       wispUrl = "wss://epoxy.mercurywork.shop/";
     }
-    await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
+    await connection.setTransport("/lib/index.mjs", [{ wisp: wispUrl }]);
 
     if ("serviceWorker" in navigator) {
       await navigator.serviceWorker.register("/sw.js", { scope: "/service/" });

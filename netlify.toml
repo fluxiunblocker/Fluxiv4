@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && mkdir -p public/uv public/epoxy public/baremux && cp -rv node_modules/@titaniumnetwork-dev/ultraviolet/dist/* public/uv/ && cp -rv node_modules/@mercuryworkshop/epoxy-transport/dist/* public/epoxy/ && cp -rv node_modules/@mercuryworkshop/bare-mux/dist/* public/baremux/"
+  command = "npm install && mkdir -p public/assets public/lib public/core && cp -rv node_modules/@titaniumnetwork-dev/ultraviolet/dist/* public/assets/ && cp -rv node_modules/@mercuryworkshop/epoxy-transport/dist/* public/lib/ && cp -rv node_modules/@mercuryworkshop/bare-mux/dist/* public/core/"
   publish = "public"
 
 [[headers]]
