@@ -34,7 +34,7 @@ const server = createServer((req, res) => {
 server.on("upgrade", (req, socket, head) => {
   if (bare.shouldRoute(req)) {
     bare.routeUpgrade(req, socket, head);
-  } else if (req.url.endsWith("/ws/")) {
+  } else if (req.url.endsWith("/e7f8/")) {
     wisp.routeRequest(req, socket, head);
   } else {
     socket.end();
