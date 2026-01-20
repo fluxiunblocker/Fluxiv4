@@ -19,9 +19,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(join(__dirname, "../public")));
-app.use("/assets/", express.static(uvPath));
-app.use("/lib/", express.static(epoxyPath));
-app.use("/core/", express.static(baremuxPath));
+app.use("/x1y2/", express.static(uvPath));
+app.use("/c5d6/", express.static(epoxyPath));
+app.use("/a3b4/", express.static(baremuxPath));
 
 const server = createServer((req, res) => {
   if (bare.shouldRoute(req)) {
