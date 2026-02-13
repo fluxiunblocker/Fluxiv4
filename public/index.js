@@ -1,4 +1,4 @@
-﻿import { BareMuxConnection } from "/baremux/index.mjs";
+import { BareMuxConnection } from "/baremux/index.mjs";
 
 async function init() {
   try {
@@ -18,7 +18,7 @@ async function init() {
 
     return true;
   } catch (error) {
-    alert("Proxy connection failed! Public Wisp servers are down. You MUST host your own server. See walkthrough.md for instructions.");
+    alert("Connection failed! Public Wisp servers are down. You MUST host your own server. See walkthrough.md for instructions.");
     return false;
   }
 }
@@ -28,7 +28,7 @@ const initPromise = init();
 async function go(url) {
   const ready = await initPromise;
   if (!ready) {
-    alert("Failed to initialize proxy. Check console for errors.");
+    alert("Failed to initialize connection. Check console for errors.");
     return;
   }
 
