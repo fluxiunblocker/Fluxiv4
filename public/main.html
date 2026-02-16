@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fluxiv4</title>
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="https://cdn.prod.website-files.com/5d6db64572061db9c481aaeb/60df10e6f5ffea4eace64375_classlink-favicon.png">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -242,6 +242,37 @@
             line-height: 1.6;
         }
     </style>
+
+    <!-- Loading overlay for panic key -->
+    <div id="panic-loading" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#ffffff;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:99999;
+">
+        <div style="
+    width: 60px;
+    height: 60px;
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #4285F4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  "></div>
+        <div style="color:#5f6368;font-size:18px;">Loading…</div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -411,6 +442,49 @@
         });
 
         init();
+
+        // Panic key logic
+        let typedKeys = "";
+        let blankTab = null;
+
+        window.addEventListener("keydown", function (e) {
+            typedKeys += e.key.toLowerCase();
+            if (typedKeys.length > 3) {
+                typedKeys = typedKeys.slice(-3);
+            }
+
+            if (typedKeys === "abc") {
+                triggerPanic();
+            }
+        });
+
+        function triggerPanic() {
+            // Show loading screen
+            const loadingOverlay = document.getElementById('panic-loading');
+            const originalTitle = window.top.document.title;
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex';
+            }
+            window.top.document.title = "Loading...";
+
+            setTimeout(() => {
+                if (window.opener) {
+                    // Open ClassLink in new tab and close this popup tab
+                    window.open("https://classlink.com", "_blank");
+                    window.close();
+                } else if (window !== window.top) {
+                    // Inside iframe, navigate top window to ClassLink
+                    window.top.location.href = "https://classlink.com";
+                } else {
+                    // Normal tab navigation
+                    window.location.href = "https://classlink.com";
+                }
+                // Optionally restore title if navigation fails (rare)
+                document.title = originalTitle;
+            }, 5000); // 10 seconds delay
+        }
+
+
     </script>
 </body>
 
