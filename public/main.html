@@ -399,11 +399,32 @@
             }
         }
 
-        function navigate(url) {
+function navigate(url) {
             if (!ready) {
                 alert("Please wait for initialization to complete");
                 return;
             }
+            if (!url.startsWith("http")) url = "https://" + url;
+
+            // If URL is OAuth or login redirect url, open in top window instead of iframe
+            const oauthPatterns = [
+                "login.nvidia.com/authorize",
+                "login.nvidia.com/oauth",
+                "login.microsoftonline.com",
+                "accounts.google.com",
+                "play.geforcenow.com/redirect"
+            ];
+
+            if (oauthPatterns.some(pattern => url.includes(pattern))) {
+                window.top.location.href = url;
+                return;
+            }
+
+            const encoded = __uv$config.prefix + __uv$config.encodeUrl(url);
+            homeEl.style.display = "none";
+            frameEl.style.display = "block";
+            frameEl.src = encoded;
+        }
             if (!url.startsWith("http")) url = "https://" + url;
             const encoded = __uv$config.prefix + __uv$config.encodeUrl(url);
 
