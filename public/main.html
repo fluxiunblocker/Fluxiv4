@@ -424,14 +424,7 @@ function navigate(url) {
             homeEl.style.display = "none";
             frameEl.style.display = "block";
             frameEl.src = encoded;
-        }
-            if (!url.startsWith("http")) url = "https://" + url;
-            const encoded = __uv$config.prefix + __uv$config.encodeUrl(url);
-
-            homeEl.style.display = "none";
-            frameEl.style.display = "block";
-            frameEl.src = encoded;
-        }
+            }
 
         document.getElementById("url-form").addEventListener("submit", e => {
             e.preventDefault();
